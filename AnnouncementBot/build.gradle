@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '4.0.4'
+}
+
+mainClassName = 'dev.mrpanda.AnnouncementBot.Bot'
+
+version '1.0'
+
+sourceCompatibility = 1.8
+
+jar {
+
+    archiveName = "AnnouncementBot.jar"
+
+    from {
+
+        configurations.runtime.findAll { !it.name.endsWith('pom') }.collect {
+        	it.isDirectory() ? it : zipTree(it)
+        }
+
+        configurations.compile.findAll { !it.name.endsWith('pom') }.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+
+    manifest {
+        attributes 'Main-Class': 'dev.mrpanda.AnnouncementBot.Bot'
+    }
+
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'com.jagrosh:jda-utilities:3.0.5'
+    compile 'net.dv8tion:JDA:4.2.0_227'
+    compile 'org.slf4j:slf4j-nop:1.7.30'
+    compile 'com.google.api-client:google-api-client:1.23.0'
+    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+    compile 'com.google.apis:google-api-services-youtube:v3-rev222-1.25.0'
+    compile 'com.github.twitch4j:twitch4j:1.2.0'
+}
+
+compileJava.options.encoding = 'CP1254'
