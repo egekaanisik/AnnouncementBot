@@ -247,9 +247,6 @@ public class Bot extends ListenerAdapter {
 		}
 	}
 	
-	public static Timer concert = null;
-	public static List<Message> messages = new ArrayList<Message>();
-	
 	public void onPrivateMessageReceived(@Nonnull PrivateMessageReceivedEvent event) {
 		if(event.getAuthor().isBot()) return;
 		
@@ -266,8 +263,6 @@ public class Bot extends ListenerAdapter {
 		channel.sendMessage("See you!").complete();
 		if(t != null)
 			t.cancel();
-		if(concert != null)
-			concert.cancel();
 		log("System", "Timers closed.");
 		twitch.getEventManager().close();
 		twitch.close();
